@@ -5,20 +5,27 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "format": "turbo run format",
+    "test": "turbo run test",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "prettier": "^3.5.3",
+    "husky": "^9.1.7",
     "turbo": "^2.4.4",
     "typescript": "5.8.2"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "packageManager": "bun@1.2.5",
   "workspaces": [
     "apps/*",
-    "packages/*"
-  ]
+    "packages/*",
+    "apps/**/*",
+    "packages/**/*"
+  ],
+  "dependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0"
+  }
 }
