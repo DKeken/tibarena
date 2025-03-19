@@ -8,17 +8,23 @@
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "cache": false,
+      "persistent": false
     },
     "format": {
-      "dependsOn": ["^format"]
+      "dependsOn": ["^format"],
+      "cache": false,
+      "persistent": false
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
     "test": {
-      "dependsOn": ["^test"]
+      "dependsOn": ["^test"],
+      "cache": false,
+      "persistent": false
     }
   }
 }

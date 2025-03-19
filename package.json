@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "kill-port 3000 3333 && turbo run dev",
     "lint": "turbo run lint",
     "format": "turbo run format",
     "test": "turbo run test",
@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "husky": "^9.1.7",
+    "kill-port": "^2.0.1",
     "turbo": "^2.4.4",
     "typescript": "5.8.2"
   },
