@@ -1,6 +1,7 @@
 {
   "name": "tibarena",
   "private": true,
+  "version": "0.0.2",
   "scripts": {
     "build": "turbo run build",
     "dev": "kill-port 3000 3333 && turbo run dev",
@@ -8,11 +9,17 @@
     "format": "turbo run format",
     "test": "turbo run test",
     "prepare": "husky",
-    "generate": "turbo run generate"
+    "generate": "turbo run generate",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+    "release:major": "standard-version --release-as major",
+    "release:dry-run": "standard-version --dry-run"
   },
   "devDependencies": {
     "husky": "^9.1.7",
     "kill-port": "^2.0.1",
+    "standard-version": "^9.5.0",
     "turbo": "^2.4.4",
     "typescript": "5.8.2"
   },
