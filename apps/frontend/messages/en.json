@@ -1,5 +1,221 @@
 {
   "HomePage": {
-    "title": "Hello world!"
+    "title": "TIB",
+    "hero": {
+      "heading": "ARENA",
+      "subheading": "Multiplayer online game with blockchain integration and minimalist pixel graphics, where players battle each other in real-time gladiator arenas.",
+      "cta": "Enter Arena",
+      "learnMore": "Learn More",
+      "beta": "BETA",
+      "onlineUsers": "players online",
+      "lastUpdated": "Last updated: Today"
+    },
+    "features": {
+      "title": "Game Features",
+      "description": "A gaming experience combining strategy, chance, and blockchain technology.",
+      "items": {
+        "battles": {
+          "title": "Dynamic Battles",
+          "description": "Fast-paced duels based on provably fair system.",
+          "content": "Each battle is a short duel lasting up to 2 minutes, where every decision affects the outcome."
+        },
+        "tokens": {
+          "title": "Glory Tokens",
+          "description": "Battle stakes are made using the in-game Glory token.",
+          "content": "Win battles, earn tokens and climb the ranks to become the arena champion."
+        },
+        "nft": {
+          "title": "Arena Master Key NFTs",
+          "description": "Collection of 3,333 unique NFTs with real utility.",
+          "content": "NFT owners receive passive income, exclusive access, customization options and the ability to rent NFTs to other players."
+        },
+        "chances": {
+          "title": "Equal Chances",
+          "description": "Balance of randomness and strategy for all players.",
+          "content": "Thanks to transparent mechanics, newcomers and experienced players have equal chances to win."
+        }
+      }
+    },
+    "battle": {
+      "title": "Battle System",
+      "description": "Simple yet engaging battle system with maximum transparency.",
+      "actions": {
+        "title": "Three Strategic Actions",
+        "strike": {
+          "title": "Powerful Strike",
+          "description": "High damage but low hit probability (about 30%)."
+        },
+        "defense": {
+          "title": "Defensive Stance",
+          "description": "Reduces incoming damage by 50% in the next turn."
+        },
+        "lunge": {
+          "title": "Precise Lunge",
+          "description": "Small guaranteed damage with critical hit chance (10%)."
+        }
+      },
+      "fairplay": {
+        "title": "Provably Fair System",
+        "description": "All battle mechanics, hit probability and critical strikes are implemented using the Provably Fair system. Players can independently verify the results of any battle."
+      },
+      "benefits": {
+        "title": "Key Benefits",
+        "items": {
+          "transparency": "Fully transparent algorithm with verifiable results",
+          "chances": "Equal chances for victory for all participants",
+          "winner": "Winner takes the entire stake pool minus commission (4%)"
+        }
+      },
+      "cta": "Start Playing"
+    },
+    "tokenomics": {
+      "title": "Tokenomics",
+      "description": "Economic model built on the Glory token and NFT system with real utility.",
+      "token": {
+        "title": "Glory Token Distribution",
+        "supply": "Total supply: 100,000,000 Glory tokens"
+      },
+      "distribution": {
+        "rewards": "Game Rewards & Liquidity",
+        "marketing": "Marketing & Initial Sales",
+        "team": "Development Team (24 months vesting)",
+        "partnerships": "Partnerships & Ecosystem Development",
+        "community": "Staking & Community Bonuses"
+      },
+      "commission": {
+        "title": "Battle Commission (4%)",
+        "nft": "Arena Master Key NFT Holders",
+        "liquidity": "Liquidity Pool",
+        "development": "Development Team"
+      }
+    },
+    "roadmap": {
+      "title": "Roadmap",
+      "description": "Development plan and key milestones for Tib Arena",
+      "items": {
+        "mvp": {
+          "title": "MVP",
+          "timeframe": "0-2 months",
+          "description": "Core battle loop, stakes, Glory token, basic interface and NFT presale",
+          "items": {
+            "battle": "Core battle loop with provably fair mechanics",
+            "token": "Glory token implementation and staking system",
+            "ui": "Minimalist UI/UX with pixel graphics",
+            "nft": "Preparation for Arena Master Key NFT presale"
+          }
+        },
+        "launch": {
+          "title": "Main Launch",
+          "timeframe": "2-4 months",
+          "description": "Real-time PvP, NFT integration, daily activities and spectator mode",
+          "items": {
+            "pvp": "Real-time PvP battles with improved mechanics",
+            "nft": "Full NFT integration with passive income features",
+            "rewards": "Daily rewards and streak system",
+            "spectator": "Real-time battle spectator mode"
+          }
+        },
+        "scaling": {
+          "title": "Scaling",
+          "timeframe": "4-8 months",
+          "description": "Mobile version, expanded customization and social features",
+          "items": {
+            "mobile": "iOS and Android mobile app release",
+            "customization": "Enhanced gladiator customization",
+            "social": "Social features, guilds and tournaments",
+            "mechanics": "Additional battle mechanics and tactical elements"
+          }
+        },
+        "ecosystem": {
+          "title": "Ecosystem",
+          "timeframe": "8+ months",
+          "description": "DAO, NFT marketplace, NFT rental and partnership integrations",
+          "items": {
+            "dao": "DAO governance for community decisions",
+            "marketplace": "NFT marketplace for trading Arena Master Keys",
+            "rental": "NFT rental system for passive income",
+            "partnerships": "Strategic partnerships and cross-game integrations"
+          }
+        }
+      }
+    },
+    "nft": {
+      "title": "Arena Master Key NFTs",
+      "description": "Collection of 3,333 unique NFTs with real utility and valuable benefits for holders.",
+      "exclusive": "Exclusive Collection",
+      "explore": "Explore NFTs",
+      "benefits": {
+        "passive": {
+          "title": "Passive Income",
+          "description": "Earn 2% from the commission of all battles happening in the arena"
+        },
+        "exclusive": {
+          "title": "Exclusive Access",
+          "description": "Access to private arenas with reduced commission and improved coefficients"
+        },
+        "customization": {
+          "title": "Unique Customization",
+          "description": "Exclusive avatars, armor and weapons for your gladiator"
+        },
+        "rental": {
+          "title": "NFT Rental",
+          "description": "Rent your NFT to other players, earning a share of their winnings"
+        }
+      }
+    },
+    "stats": {
+      "title": "Unique Features",
+      "description": "What makes Tib Arena truly special",
+      "items": {
+        "battle": {
+          "value": "2 min",
+          "label": "Battle Duration"
+        },
+        "fair": {
+          "value": "100%",
+          "label": "Provably Fair"
+        },
+        "spectator": {
+          "value": "Spectator Mode",
+          "label": "Real-time"
+        },
+        "rewards": {
+          "value": "Daily",
+          "label": "Bonuses & Rewards"
+        }
+      },
+      "features": {
+        "gameplay": {
+          "title": "Short and Dynamic Battles",
+          "description": "Each round lasts up to 2 minutes, perfect for quick engagement and frequent gaming sessions. The fast pace keeps attention and encourages players to return again."
+        },
+        "fair": {
+          "title": "Equal Chances to Win",
+          "description": "The balance of randomness and strategy makes winning chances equal for everyone. Newcomers can successfully compete with experienced players thanks to the transparent Provably Fair system."
+        },
+        "social": {
+          "title": "Real-time Spectator Mode",
+          "description": "Watch other players' duels, learn strategies, cheer for favorites and become part of the gladiator community."
+        },
+        "surprise": {
+          "title": "Bonuses and Rewards",
+          "description": "Random Glory token airdrops for active players, daily free battles and streak system motivate returning to the game every day."
+        }
+      }
+    },
+    "cta": {
+      "title": "Join the Gladiator Arena",
+      "description": "Become part of a gaming ecosystem with daily rewards, dynamic battles and transparent blockchain economy.",
+      "button": "Join Discord",
+      "leaderboard": "View Leaderboard"
+    },
+    "footer": {
+      "copyright": "TIB ARENA",
+      "rights": "All rights reserved",
+      "menu": {
+        "product": "Product",
+        "company": "Company"
+      }
+    }
   }
 }

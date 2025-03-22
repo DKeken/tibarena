@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Providers } from "./_components/providers";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme.provider";
 import { NextIntlClientProvider } from "next-intl";
@@ -8,7 +7,6 @@ import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
-// Initialize fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -21,21 +19,18 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-// Metadata configuration
 export const metadata: Metadata = {
   title: "TIB Arena",
   description: "Welcome to TIB Arena - Your Ultimate Gaming Platform",
   keywords: ["gaming", "arena", "TIB", "platform"],
 };
 
-// Viewport configuration
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: "#000000",
 };
 
-// Root layout component
 export default async function RootLayout({
   children,
 }: {
@@ -45,7 +40,11 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="h-screen w-screen" suppressHydrationWarning>
+    <html
+      lang={locale}
+      className="h-screen w-screen !overflow-x-hidden"
+      suppressHydrationWarning
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans size-full antialiased`}
       >
@@ -56,7 +55,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Providers>{children}</Providers>
+            {children}
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
