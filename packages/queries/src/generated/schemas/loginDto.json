@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "address": { "type": "string", "description": "Ethereum wallet address" },
+    "signature": {
+      "type": "string",
+      "description": "Signed message containing the nonce"
+    },
+    "message": {
+      "type": "string",
+      "description": "The full message that was signed"
+    }
+  },
+  "required": ["address", "signature"],
+  "x-readme-ref-name": "LoginDto"
+}

@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "description": "Indicates if the logout was successful",
+      "example": true
+    },
+    "message": {
+      "type": "string",
+      "description": "Message describing the result of the logout operation",
+      "example": "Logged out successfully"
+    }
+  },
+  "required": ["success", "message"],
+  "x-readme-ref-name": "LogoutResponseDto"
+}

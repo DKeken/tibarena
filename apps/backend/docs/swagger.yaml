@@ -1,0 +1,269 @@
+openapi: 3.0.0
+paths:
+  /api/health:
+    get:
+      operationId: AppController_getHealth
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - App
+  /api/users:
+    post:
+      operationId: UsersController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: User successfully created
+        '400':
+          description: Bad request
+      summary: Create new user
+      tags:
+        - users
+    get:
+      operationId: UsersController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: Return all users
+      summary: Get all users
+      tags:
+        - users
+  /api/users/{id}:
+    get:
+      operationId: UsersController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Return user by id
+        '404':
+          description: User not found
+      summary: Get user by id
+      tags:
+        - users
+    patch:
+      operationId: UsersController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+      responses:
+        '200':
+          description: User successfully updated
+        '404':
+          description: User not found
+      summary: Update user
+      tags:
+        - users
+    delete:
+      operationId: UsersController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User successfully deleted
+        '404':
+          description: User not found
+      summary: Delete user
+      tags:
+        - users
+  /api/users/email/{email}:
+    get:
+      operationId: UsersController_findByEmail
+      parameters:
+        - name: email
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Return user by email
+        '404':
+          description: User not found
+      summary: Get user by email
+      tags:
+        - users
+  /api/users/username/{username}:
+    get:
+      operationId: UsersController_findByUsername
+      parameters:
+        - name: username
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Return user by username
+        '404':
+          description: User not found
+      summary: Get user by username
+      tags:
+        - users
+  /api/auth/nonce:
+    post:
+      operationId: AuthController_getNonce
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetNonceDto'
+      responses:
+        '200':
+          description: Nonce generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid wallet address
+      summary: Get nonce for Ethereum wallet authentication
+      tags:
+        - Authentication
+  /api/auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Invalid signature
+      summary: Authenticate using Ethereum wallet signature
+      tags:
+        - Authentication
+  /api/example/protected:
+    get:
+      operationId: ExampleController_getProtectedData
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Example
+  /api/example/profile:
+    get:
+      operationId: SimplifiedExampleController_getProfile
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - SimplifiedExample
+info:
+  title: TibArena API
+  description: The TibArena API documentation
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+    cookie:
+      type: apiKey
+      in: cookie
+      name: accessToken
+  schemas:
+    CreateUserDto:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the user
+          example: john_doe
+          minLength: 3
+          maxLength: 30
+        email:
+          type: string
+          description: Email address of the user
+          example: john.doe@example.com
+        password:
+          type: string
+          description: Password for email authentication
+          example: StrongP@ss123
+          minLength: 8
+        passwordHash:
+          type: string
+          description: >-
+            Hashed password of the user (auto-generated, don't provide it
+            directly)
+          example: $2b$10$abcdefghijklmnopqrstuvwxyz123456789
+          readOnly: true
+        walletAddress:
+          type: string
+          description: Ethereum wallet address for wallet-based authentication
+          example: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'
+        authNonce:
+          type: string
+          description: >-
+            Authentication nonce for the user (auto-generated, don't provide it
+            directly)
+          example: a1b2c3d4e5f6
+          readOnly: true
+      required:
+        - username
+    UpdateUserDto:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the user
+          example: john_doe
+          minLength: 3
+          maxLength: 30
+        email:
+          type: string
+          description: Email address of the user
+          example: user@example.com
+        password:
+          type: string
+          description: Password of the user (will be hashed)
+          example: StrongP@ssw0rd
+          writeOnly: true
+        walletAddress:
+          type: string
+          description: Blockchain wallet address of the user
+          example: '0x1234567890abcdef1234567890abcdef12345678'
+    GetNonceDto:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Ethereum wallet address
+      required:
+        - address

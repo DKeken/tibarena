@@ -1,0 +1,623 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "TibArena API",
+    "description": "The TibArena API documentation",
+    "version": "1.0",
+    "contact": {}
+  },
+  "servers": [],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "operationId": "AppController_getHealth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/api/users": {
+      "post": {
+        "operationId": "UsersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully created"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "summary": "Create new user",
+        "tags": [
+          "users"
+        ]
+      },
+      "get": {
+        "operationId": "UsersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Return all users"
+          }
+        },
+        "summary": "Get all users",
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "operationId": "UsersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return user by id"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Get user by id",
+        "tags": [
+          "users"
+        ]
+      },
+      "patch": {
+        "operationId": "UsersController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully updated"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Update user",
+        "tags": [
+          "users"
+        ]
+      },
+      "delete": {
+        "operationId": "UsersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully deleted"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Delete user",
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/users/email/{email}": {
+      "get": {
+        "operationId": "UsersController_findByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return user by email"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Get user by email",
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/users/username/{username}": {
+      "get": {
+        "operationId": "UsersController_findByUsername",
+        "parameters": [
+          {
+            "name": "username",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return user by username"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Get user by username",
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/auth/nonce": {
+      "post": {
+        "operationId": "AuthController_getNonce",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNonceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Nonce generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NonceResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid wallet address"
+          }
+        },
+        "summary": "Get nonce for Ethereum wallet authentication",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid signature"
+          }
+        },
+        "summary": "Authenticate using Ethereum wallet signature",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "operationId": "AuthController_refreshToken",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Token refreshed successfully"
+          },
+          "401": {
+            "description": "Invalid refresh token"
+          }
+        },
+        "summary": "Refresh access token",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "operationId": "AuthController_logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Logout successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Log out the current user",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/example/protected": {
+      "get": {
+        "operationId": "ExampleController_getProtectedData",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved protected data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You have access to this protected resource"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "1234567890"
+                        },
+                        "walletAddress": {
+                          "type": "string",
+                          "example": "0x1234567890abcdef1234567890abcdef12345678"
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "user123"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication"
+          }
+        },
+        "summary": "Get protected user data",
+        "tags": [
+          "Authentication Example"
+        ]
+      }
+    },
+    "/api/jwt-example/protected": {
+      "get": {
+        "operationId": "SimplifiedExampleController_getProtectedData",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved protected data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "You have access to this JWT-protected resource"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "1234567890"
+                        },
+                        "walletAddress": {
+                          "type": "string",
+                          "example": "0x1234567890abcdef1234567890abcdef12345678"
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "user123"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing JWT token"
+          }
+        },
+        "summary": "Get protected user data using JWT",
+        "tags": [
+          "JWT Authentication Example"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Username of the user",
+            "example": "john_doe",
+            "minLength": 3,
+            "maxLength": 30
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address of the user",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password for email authentication",
+            "example": "StrongP@ss123",
+            "minLength": 8
+          },
+          "passwordHash": {
+            "type": "string",
+            "description": "Hashed password of the user (auto-generated, don't provide it directly)",
+            "example": "$2b$10$abcdefghijklmnopqrstuvwxyz123456789",
+            "readOnly": true
+          },
+          "walletAddress": {
+            "type": "string",
+            "description": "Ethereum wallet address for wallet-based authentication",
+            "example": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
+          },
+          "authNonce": {
+            "type": "string",
+            "description": "Authentication nonce for the user (auto-generated, don't provide it directly)",
+            "example": "a1b2c3d4e5f6",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "username"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Username of the user",
+            "example": "john_doe",
+            "minLength": 3,
+            "maxLength": 30
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address of the user",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password of the user (will be hashed)",
+            "example": "StrongP@ssw0rd",
+            "writeOnly": true
+          },
+          "walletAddress": {
+            "type": "string",
+            "description": "Blockchain wallet address of the user",
+            "example": "0x1234567890abcdef1234567890abcdef12345678"
+          }
+        }
+      },
+      "GetNonceDto": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Ethereum wallet address"
+          }
+        },
+        "required": [
+          "address"
+        ]
+      },
+      "NonceResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Indicates if the logout was successful",
+            "example": true
+          },
+          "nonce": {
+            "type": "string",
+            "description": "Nonce to be signed",
+            "example": "123456789"
+          }
+        },
+        "required": [
+          "success",
+          "nonce"
+        ]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Ethereum wallet address"
+          },
+          "signature": {
+            "type": "string",
+            "description": "Signed message containing the nonce"
+          },
+          "message": {
+            "type": "string",
+            "description": "The full message that was signed"
+          }
+        },
+        "required": [
+          "address",
+          "signature"
+        ]
+      },
+      "UserResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "walletAddress": {
+            "type": "string",
+            "description": "Ethereum wallet address",
+            "example": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+          },
+          "username": {
+            "type": "string",
+            "description": "Username",
+            "example": "crypto_enthusiast"
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "User profile image URL",
+            "example": "https://example.com/avatar.png"
+          }
+        },
+        "required": [
+          "id",
+          "walletAddress"
+        ]
+      },
+      "LoginResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Authentication success status",
+            "example": true
+          },
+          "user": {
+            "description": "Authenticated user information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserResponseDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "success",
+          "user"
+        ]
+      },
+      "LogoutResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Indicates if the logout was successful",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "Message describing the result of the logout operation",
+            "example": "Logged out successfully"
+          }
+        },
+        "required": [
+          "success",
+          "message"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      },
+      "cookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "accessToken"
+      }
+    }
+  }
+}

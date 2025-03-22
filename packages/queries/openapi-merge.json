@@ -1,0 +1,8 @@
+{
+  "inputs": [
+    {
+      "inputURL": "http://localhost:3333/api/docs/json"
+    }
+  ],
+  "output": "./output.swagger.json"
+}

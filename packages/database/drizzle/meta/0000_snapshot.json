@@ -1,5 +1,5 @@
 {
-  "id": "e004d600-22b7-4b8a-b36f-c3e078d7e6f0",
+  "id": "1982a30a-b0ff-4981-b813-3f6bcadb296f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -16,7 +16,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -51,6 +51,25 @@
           "primaryKey": false,
           "notNull": false
         },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "varchar(512)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refresh_token_expires_at": {
+          "name": "refresh_token_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_refresh_token_revoked": {
+          "name": "is_refresh_token_revoked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -67,15 +86,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "sessions_user_id_users_id_fk": {
-          "name": "sessions_user_id_users_id_fk",
+        "sessions_user_id_users_user_id_fk": {
+          "name": "sessions_user_id_users_user_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -91,11 +110,12 @@
       "name": "users",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "username": {
           "name": "username",
@@ -114,6 +134,13 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'user'"
         },
         "wallet_address": {
           "name": "wallet_address",
@@ -194,13 +221,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -219,7 +247,7 @@
         },
         "battle_id": {
           "name": "battle_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },
@@ -255,6 +283,13 @@
           "primaryKey": false,
           "notNull": false
         },
+        "details": {
+          "name": "details",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{}'::jsonb"
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -271,15 +306,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "transactions_user_id_users_id_fk": {
-          "name": "transactions_user_id_users_id_fk",
+        "transactions_user_id_users_user_id_fk": {
+          "name": "transactions_user_id_users_user_id_fk",
           "tableFrom": "transactions",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "restrict",
           "onUpdate": "no action"
@@ -310,9 +345,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "token_id": {
           "name": "token_id",
@@ -322,7 +358,7 @@
         },
         "owner_id": {
           "name": "owner_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -335,7 +371,7 @@
         },
         "renter_id": {
           "name": "renter_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },
@@ -353,7 +389,8 @@
         },
         "rarity_tier": {
           "name": "rarity_tier",
-          "type": "varchar(20)",
+          "type": "rarity_tier",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
           "default": "'common'"
@@ -362,7 +399,8 @@
           "name": "metadata",
           "type": "jsonb",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'{\"name\":\"\",\"description\":\"\",\"attributes\":[]}'::jsonb"
         },
         "image_url": {
           "name": "image_url",
@@ -414,28 +452,28 @@
         }
       },
       "foreignKeys": {
-        "arena_master_keys_owner_id_users_id_fk": {
-          "name": "arena_master_keys_owner_id_users_id_fk",
+        "arena_master_keys_owner_id_users_user_id_fk": {
+          "name": "arena_master_keys_owner_id_users_user_id_fk",
           "tableFrom": "arena_master_keys",
           "tableTo": "users",
           "columnsFrom": [
             "owner_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
-        "arena_master_keys_renter_id_users_id_fk": {
-          "name": "arena_master_keys_renter_id_users_id_fk",
+        "arena_master_keys_renter_id_users_user_id_fk": {
+          "name": "arena_master_keys_renter_id_users_user_id_fk",
           "tableFrom": "arena_master_keys",
           "tableTo": "users",
           "columnsFrom": [
             "renter_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "set null",
           "onUpdate": "no action"
@@ -453,25 +491,27 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "nft_id": {
           "name": "nft_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
         "beneficiary_id": {
           "name": "beneficiary_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
         "benefit_type": {
           "name": "benefit_type",
-          "type": "varchar(50)",
+          "type": "benefit_type",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
@@ -516,15 +556,15 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "nft_benefits_beneficiary_id_users_id_fk": {
-          "name": "nft_benefits_beneficiary_id_users_id_fk",
+        "nft_benefits_beneficiary_id_users_user_id_fk": {
+          "name": "nft_benefits_beneficiary_id_users_user_id_fk",
           "tableFrom": "nft_benefits",
           "tableTo": "users",
           "columnsFrom": [
             "beneficiary_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -542,13 +582,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "battle_id": {
           "name": "battle_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -640,25 +681,26 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "gladiator1_id": {
           "name": "gladiator1_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
         "gladiator2_id": {
           "name": "gladiator2_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
         "winner_id": {
           "name": "winner_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },
@@ -769,9 +811,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "title": {
           "name": "title",
@@ -839,13 +882,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -885,15 +929,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "login_streaks_user_id_users_id_fk": {
-          "name": "login_streaks_user_id_users_id_fk",
+        "login_streaks_user_id_users_user_id_fk": {
+          "name": "login_streaks_user_id_users_user_id_fk",
           "tableFrom": "login_streaks",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -911,19 +955,20 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
         "mission_id": {
           "name": "mission_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -976,15 +1021,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "player_mission_progress_user_id_users_id_fk": {
-          "name": "player_mission_progress_user_id_users_id_fk",
+        "player_mission_progress_user_id_users_user_id_fk": {
+          "name": "player_mission_progress_user_id_users_user_id_fk",
           "tableFrom": "player_mission_progress",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -1015,13 +1060,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -1050,7 +1096,8 @@
           "name": "reward_data",
           "type": "jsonb",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'{\"coins\":0,\"experience\":0,\"items\":[]}'::jsonb"
         },
         "expires_at": {
           "name": "expires_at",
@@ -1101,15 +1148,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "player_rewards_user_id_users_id_fk": {
-          "name": "player_rewards_user_id_users_id_fk",
+        "player_rewards_user_id_users_user_id_fk": {
+          "name": "player_rewards_user_id_users_user_id_fk",
           "tableFrom": "player_rewards",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -1127,13 +1174,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "owner_id": {
           "name": "owner_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -1186,15 +1234,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "gladiators_owner_id_users_id_fk": {
-          "name": "gladiators_owner_id_users_id_fk",
+        "gladiators_owner_id_users_user_id_fk": {
+          "name": "gladiators_owner_id_users_user_id_fk",
           "tableFrom": "gladiators",
           "tableTo": "users",
           "columnsFrom": [
             "owner_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -1231,6 +1279,28 @@
         "fee",
         "nft_purchase",
         "nft_rental"
+      ]
+    },
+    "public.benefit_type": {
+      "name": "benefit_type",
+      "schema": "public",
+      "values": [
+        "commission_reduction",
+        "exclusive_access",
+        "customization",
+        "battle_bonus",
+        "daily_reward"
+      ]
+    },
+    "public.rarity_tier": {
+      "name": "rarity_tier",
+      "schema": "public",
+      "values": [
+        "common",
+        "uncommon",
+        "rare",
+        "epic",
+        "legendary"
       ]
     },
     "public.battle_action": {

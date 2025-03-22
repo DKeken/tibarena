@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "properties": {
+    "address": { "type": "string", "description": "Ethereum wallet address" }
+  },
+  "required": ["address"],
+  "x-readme-ref-name": "GetNonceDto"
+}

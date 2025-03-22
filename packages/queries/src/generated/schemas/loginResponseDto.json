@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "description": "Authentication success status",
+      "example": true
+    },
+    "user": {
+      "description": "Authenticated user information",
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "User ID",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "walletAddress": {
+              "type": "string",
+              "description": "Ethereum wallet address",
+              "example": "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+            },
+            "username": {
+              "type": "string",
+              "description": "Username",
+              "example": "crypto_enthusiast"
+            },
+            "imageUrl": {
+              "type": "string",
+              "description": "User profile image URL",
+              "example": "https://example.com/avatar.png"
+            }
+          },
+          "required": ["id", "walletAddress"],
+          "x-readme-ref-name": "UserResponseDto"
+        }
+      ]
+    }
+  },
+  "required": ["success", "user"],
+  "x-readme-ref-name": "LoginResponseDto"
+}

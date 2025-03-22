@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "description": "Indicates if the logout was successful",
+      "example": true
+    },
+    "nonce": {
+      "type": "string",
+      "description": "Nonce to be signed",
+      "example": "123456789"
+    }
+  },
+  "required": ["success", "nonce"],
+  "x-readme-ref-name": "NonceResponseDto"
+}

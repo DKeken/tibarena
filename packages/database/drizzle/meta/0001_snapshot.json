@@ -1,9 +1,55 @@
 {
-  "id": "833125ac-52ce-4278-b842-dfdb424c507a",
-  "prevId": "e004d600-22b7-4b8a-b36f-c3e078d7e6f0",
+  "id": "4ee8eabe-a12b-4452-828d-bc018839569d",
+  "prevId": "1982a30a-b0ff-4981-b813-3f6bcadb296f",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.auth_messages": {
+      "name": "auth_messages",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "wallet_address": {
+          "name": "wallet_address",
+          "type": "varchar(42)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.sessions": {
       "name": "sessions",
       "schema": "",
@@ -16,7 +62,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "varchar",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -51,6 +97,25 @@
           "primaryKey": false,
           "notNull": false
         },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "varchar(512)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refresh_token_expires_at": {
+          "name": "refresh_token_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_refresh_token_revoked": {
+          "name": "is_refresh_token_revoked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -67,15 +132,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "sessions_user_id_users_id_fk": {
-          "name": "sessions_user_id_users_id_fk",
+        "sessions_user_id_users_user_id_fk": {
+          "name": "sessions_user_id_users_user_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -91,8 +156,8 @@
       "name": "users",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
+        "user_id": {
+          "name": "user_id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
@@ -108,13 +173,20 @@
           "name": "email",
           "type": "varchar(100)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "password_hash": {
           "name": "password_hash",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'user'"
         },
         "wallet_address": {
           "name": "wallet_address",
@@ -280,15 +352,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "transactions_user_id_users_id_fk": {
-          "name": "transactions_user_id_users_id_fk",
+        "transactions_user_id_users_user_id_fk": {
+          "name": "transactions_user_id_users_user_id_fk",
           "tableFrom": "transactions",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "restrict",
           "onUpdate": "no action"
@@ -426,28 +498,28 @@
         }
       },
       "foreignKeys": {
-        "arena_master_keys_owner_id_users_id_fk": {
-          "name": "arena_master_keys_owner_id_users_id_fk",
+        "arena_master_keys_owner_id_users_user_id_fk": {
+          "name": "arena_master_keys_owner_id_users_user_id_fk",
           "tableFrom": "arena_master_keys",
           "tableTo": "users",
           "columnsFrom": [
             "owner_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "restrict",
           "onUpdate": "no action"
         },
-        "arena_master_keys_renter_id_users_id_fk": {
-          "name": "arena_master_keys_renter_id_users_id_fk",
+        "arena_master_keys_renter_id_users_user_id_fk": {
+          "name": "arena_master_keys_renter_id_users_user_id_fk",
           "tableFrom": "arena_master_keys",
           "tableTo": "users",
           "columnsFrom": [
             "renter_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "set null",
           "onUpdate": "no action"
@@ -530,15 +602,15 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "nft_benefits_beneficiary_id_users_id_fk": {
-          "name": "nft_benefits_beneficiary_id_users_id_fk",
+        "nft_benefits_beneficiary_id_users_user_id_fk": {
+          "name": "nft_benefits_beneficiary_id_users_user_id_fk",
           "tableFrom": "nft_benefits",
           "tableTo": "users",
           "columnsFrom": [
             "beneficiary_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -903,15 +975,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "login_streaks_user_id_users_id_fk": {
-          "name": "login_streaks_user_id_users_id_fk",
+        "login_streaks_user_id_users_user_id_fk": {
+          "name": "login_streaks_user_id_users_user_id_fk",
           "tableFrom": "login_streaks",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -995,15 +1067,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "player_mission_progress_user_id_users_id_fk": {
-          "name": "player_mission_progress_user_id_users_id_fk",
+        "player_mission_progress_user_id_users_user_id_fk": {
+          "name": "player_mission_progress_user_id_users_user_id_fk",
           "tableFrom": "player_mission_progress",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -1122,15 +1194,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "player_rewards_user_id_users_id_fk": {
-          "name": "player_rewards_user_id_users_id_fk",
+        "player_rewards_user_id_users_user_id_fk": {
+          "name": "player_rewards_user_id_users_user_id_fk",
           "tableFrom": "player_rewards",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -1208,15 +1280,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "gladiators_owner_id_users_id_fk": {
-          "name": "gladiators_owner_id_users_id_fk",
+        "gladiators_owner_id_users_user_id_fk": {
+          "name": "gladiators_owner_id_users_user_id_fk",
           "tableFrom": "gladiators",
           "tableTo": "users",
           "columnsFrom": [
             "owner_id"
           ],
           "columnsTo": [
-            "id"
+            "user_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"

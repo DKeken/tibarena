@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "Username of the user",
+      "example": "john_doe",
+      "minLength": 3,
+      "maxLength": 30
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address of the user",
+      "example": "user@example.com"
+    },
+    "password": {
+      "type": "string",
+      "description": "Password of the user (will be hashed)",
+      "example": "StrongP@ssw0rd",
+      "writeOnly": true
+    },
+    "walletAddress": {
+      "type": "string",
+      "description": "Blockchain wallet address of the user",
+      "example": "0x1234567890abcdef1234567890abcdef12345678"
+    }
+  },
+  "x-readme-ref-name": "UpdateUserDto"
+}
