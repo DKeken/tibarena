@@ -133,3 +133,32 @@
 - ⚖️ Баланс случайности и навыков для максимального азарта.
 - 🎨 NFT-функционал с реальной полезностью и пассивным доходом.
 - 📅 Высокий retention и мотивация ежедневного возврата игроков.
+
+---
+
+## 🚀 **XI. Release Management**
+
+This project uses standard-version for release management. The following release scripts are available:
+
+| Command                   | Description                                                                           |
+| ------------------------- | ------------------------------------------------------------------------------------- |
+| `bun run release`         | Create a new release using conventional commit messages to determine the version bump |
+| `bun run release:patch`   | Create a new patch release (0.0.x)                                                    |
+| `bun run release:minor`   | Create a new minor release (0.x.0)                                                    |
+| `bun run release:major`   | Create a new major release (x.0.0)                                                    |
+| `bun run release:dry-run` | Preview the release without making any changes                                        |
+
+### Commit Message Guidelines
+
+This project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages:
+
+- `feat: ...` - A new feature (minor version bump)
+- `fix: ...` - A bug fix (patch version bump)
+- `docs: ...` - Documentation changes
+- `refactor: ...` - Code refactoring without functionality changes
+- `perf: ...` - Performance improvements
+- `test: ...` - Adding or updating tests
+- `chore: ...` - Build process or tooling changes
+- `style: ...` - Formatting changes
+
+Breaking changes are indicated by adding `BREAKING CHANGE:` in the commit body, which will trigger a major version bump.
