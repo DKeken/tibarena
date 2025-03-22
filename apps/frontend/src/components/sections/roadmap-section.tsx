@@ -94,7 +94,7 @@ export function RoadmapSection() {
                     "transition-all duration-300 hover:shadow-lg rounded-xl",
                     item.status === "completed" && "bg-primary/5",
                     item.status === "in-progress" && "bg-secondary/10",
-                    "p-4 md:p-6"
+                    "p-4 md:p-6",
                   )}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 justify-between">

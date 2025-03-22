@@ -13,12 +13,12 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
         ref={ref}
         className={cn(
           "relative space-y-6 before:absolute before:left-4 before:top-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-primary/50 before:to-primary/10 before:content-['']",
-          className
+          className,
         )}
         {...props}
       />
     );
-  }
+  },
 );
 Timeline.displayName = "Timeline";
 
@@ -66,7 +66,7 @@ const TimelineItem = React.forwardRef<HTMLDivElement, TimelineItemProps>(
         {content}
       </div>
     );
-  }
+  },
 );
 TimelineItem.displayName = "TimelineItem";
 
