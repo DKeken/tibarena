@@ -3,7 +3,7 @@ import { polygonZkEvmCardona } from "viem/chains";
 import { http } from "wagmi";
 
 export const config = getDefaultConfig({
-  appName: "TIB Arena",
+  appName: "TIB ARENA",
   projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID!,
   chains: [polygonZkEvmCardona],
   ssr: true,

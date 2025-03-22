@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TIB Arena",
-  description: "Welcome to TIB Arena - Your Ultimate Gaming Platform",
+  title: "TIB ARENA",
+  description: "Welcome to TIB ARENA - Your Ultimate Gaming Platform",
   keywords: ["gaming", "arena", "TIB", "platform"],
 };
 

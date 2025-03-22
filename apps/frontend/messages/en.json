@@ -91,7 +91,9 @@
     },
     "roadmap": {
       "title": "Roadmap",
-      "description": "Development plan and key milestones for Tib Arena",
+      "description": "Development plan and key milestones for TIB ARENA",
+      "completed": "Completed",
+      "inProgress": "In Progress",
       "items": {
         "mvp": {
           "title": "MVP",
@@ -165,7 +167,7 @@
     },
     "stats": {
       "title": "Unique Features",
-      "description": "What makes Tib Arena truly special",
+      "description": "What makes TIB ARENA truly special",
       "items": {
         "battle": {
           "value": "2 min",

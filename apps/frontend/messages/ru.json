@@ -92,6 +92,8 @@
     "roadmap": {
       "title": "Дорожная карта",
       "description": "План развития и ключевые этапы для TIB ARENA",
+      "completed": "Завершено",
+      "inProgress": "В процессе",
       "items": {
         "mvp": {
           "title": "MVP",

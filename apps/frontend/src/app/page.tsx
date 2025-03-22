@@ -7,7 +7,6 @@ import { BattleSection } from "@/components/sections/battle-section";
 import { TokenomicsSection } from "@/components/sections/tokenomics-section";
 import { RoadmapSection } from "@/components/sections/roadmap-section";
 import { NftSection } from "@/components/sections/nft-section";
-import { StatsSection } from "@/components/sections/stats-section";
 import { CtaSection } from "@/components/sections/cta-section";
 import { FooterSection } from "@/components/sections/footer-section";
 
@@ -32,14 +31,11 @@ export default async function Home() {
       {/* Tokenomics */}
       <TokenomicsSection />
 
-      {/* Roadmap */}
-      <RoadmapSection />
-
       {/* NFT */}
       <NftSection />
 
-      {/* Unique Features / Stats */}
-      <StatsSection />
+      {/* Roadmap */}
+      <RoadmapSection />
 
       {/* CTA */}
       <CtaSection />

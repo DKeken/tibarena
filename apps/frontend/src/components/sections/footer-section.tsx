@@ -79,14 +79,6 @@ export function FooterSection() {
                       NFT
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      href="#usp"
-                      className="transition-colors hover:text-foreground"
-                    >
-                      {t("stats.title")}
-                    </Link>
-                  </li>
                 </ul>
               </div>
             </div>

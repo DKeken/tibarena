@@ -1,9 +1,12 @@
+"use client";
+
 import { Container } from "@/components/ui/container";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { MotionDiv, fadeInUp } from "@/components/ui/motion";
 import { Timeline, TimelineItem } from "@/components/ui/timeline";
 import { Badge } from "@/components/ui/badge";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 
 const getRoadmapItems = (t: ReturnType<typeof useTranslations>) => [
   {
@@ -17,6 +20,7 @@ const getRoadmapItems = (t: ReturnType<typeof useTranslations>) => [
       t("roadmap.items.mvp.items.ui"),
       t("roadmap.items.mvp.items.nft"),
     ],
+    status: "in-progress",
   },
   {
     icon: "🚀",
@@ -29,6 +33,7 @@ const getRoadmapItems = (t: ReturnType<typeof useTranslations>) => [
       t("roadmap.items.launch.items.rewards"),
       t("roadmap.items.launch.items.spectator"),
     ],
+    status: "upcoming",
   },
   {
     icon: "📱",
@@ -41,6 +46,7 @@ const getRoadmapItems = (t: ReturnType<typeof useTranslations>) => [
       t("roadmap.items.scaling.items.social"),
       t("roadmap.items.scaling.items.mechanics"),
     ],
+    status: "upcoming",
   },
   {
     icon: "🌐",
@@ -53,6 +59,7 @@ const getRoadmapItems = (t: ReturnType<typeof useTranslations>) => [
       t("roadmap.items.ecosystem.items.rental"),
       t("roadmap.items.ecosystem.items.partnerships"),
     ],
+    status: "upcoming",
   },
 ];
 
@@ -61,11 +68,12 @@ export function RoadmapSection() {
   const roadmapItems = getRoadmapItems(t);
 
   return (
-    <Section variant="muted" id="roadmap">
+    <Section variant="muted" id="roadmap" className="py-16 md:py-24">
       <Container>
         <SectionHeader
           title={t("roadmap.title")}
           description={t("roadmap.description")}
+          className="max-w-3xl mx-auto text-center"
         />
 
         <MotionDiv
@@ -74,30 +82,64 @@ export function RoadmapSection() {
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
           transition={{ duration: 0.5 }}
-          className="mt-12"
+          className="mt-12 md:mt-16"
         >
-          <div className="relative mx-auto max-w-4xl">
+          <div className="relative mx-auto max-w-5xl">
             <Timeline>
               {roadmapItems.map((item, index) => (
                 <TimelineItem
                   key={index}
-                  icon={<span className="text-sm">{item.icon}</span>}
+                  animated={true}
+                  className={cn(
+                    "transition-all duration-300 hover:shadow-lg rounded-xl",
+                    item.status === "completed" && "bg-primary/5",
+                    item.status === "in-progress" && "bg-secondary/10",
+                    "p-4 md:p-6"
+                  )}
                 >
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-bold">{item.title}</h3>
-                    <Badge variant="secondary">{item.timeframe}</Badge>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 justify-between">
+                    <h3 className="text-xl md:text-2xl font-bold">
+                      {item.title}
+                    </h3>
+                    <Badge
+                      variant={
+                        item.status === "completed" ? "default" : "secondary"
+                      }
+                      className="w-fit text-xs md:text-sm px-3 py-1"
+                    >
+                      {item.timeframe}
+                    </Badge>
                   </div>
-                  <p className="mt-1 text-muted-foreground">
+                  <p className="mt-2 text-muted-foreground text-sm md:text-base">
                     {item.description}
                   </p>
-                  <ul className="mt-4 space-y-2">
+                  <ul className="mt-4 space-y-2 grid sm:grid-cols-2 gap-2">
                     {item.items.map((listItem, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <div className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                        <span>{listItem}</span>
+                      <li
+                        key={i}
+                        className="flex items-start gap-2 group transition-all"
+                      >
+                        <div className="mt-1.5 max-h-2 max-w-2 min-h-2 min-w-2 rounded-full bg-primary group-hover:scale-125 transition-all" />
+                        <span className="text-sm md:text-base">{listItem}</span>
                       </li>
                     ))}
                   </ul>
+                  {item.status === "completed" && (
+                    <Badge
+                      variant="outline"
+                      className="mt-4 bg-primary/10 text-primary border-primary/20"
+                    >
+                      {t("roadmap.completed")}
+                    </Badge>
+                  )}
+                  {item.status === "in-progress" && (
+                    <Badge
+                      variant="outline"
+                      className="mt-4 bg-secondary/10 text-secondary border-secondary/20"
+                    >
+                      {t("roadmap.inProgress")}
+                    </Badge>
+                  )}
                 </TimelineItem>
               ))}
             </Timeline>
