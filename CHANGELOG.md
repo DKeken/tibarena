@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/DKeken/tibarena/compare/v0.0.2...v0.0.3) (2025-03-22)
+
+
+### Features
+
+* **release:** add release scripts ([5c53dff](https://github.com/DKeken/tibarena/commit/5c53dffeb187683d70412aa6a4bdc110c872b785))
+
 ### 0.0.2 (2025-03-22)
 
 
